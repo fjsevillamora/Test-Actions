@@ -12,7 +12,7 @@ jobs:
         run: npm ci
 
       - name: Run Lint scripts
-        run: mpn run lint
+        run: npm run lint
       
       - name: Test Code
         run: npm run test
