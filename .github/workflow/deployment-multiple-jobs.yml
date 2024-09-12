@@ -1,0 +1,61 @@
+name: Deployment Actions
+on: push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get Code
+      uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Run Lint scripts
+      run: mpn run lint
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get Code
+      uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Test Code
+      run: npm run test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Code
+        run: npm run build
+
+      - name: Deploy Code
+        run: echo "Deploying Code..."
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Deploy Code
+        run: echo "Deploying Code..."
